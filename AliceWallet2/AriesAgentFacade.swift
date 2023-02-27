@@ -40,13 +40,12 @@ extension AriesAgentFacade: AgentDelegate {
 
 class AriesAgentFacade : ObservableObject {
     
-    var agentConfig: AgentConfig
     var agent: Agent?
     
-    @Published var agentProvisioned = false
-    @Published var walletOpened = false
+    @Published var isProvisioned = false
+    @Published var isReady = false
     @Published var walletSeed = ""
-    @Published var availableNetworls: [URL]? = nil
+    @Published var availableNetworks: [URL]? = nil
     @Published var selectedNetwork: URL? = nil
     @Published var agentInitialized = false
 
@@ -59,64 +58,66 @@ class AriesAgentFacade : ObservableObject {
     @Published var credentials: CredentialList = CredentialList()
     
     init() {
-        os_log(.info, log: .default, "initialize aries agent facade.")
-        self.availableNetworls = AriesAgentFacade.listGenesisTxnURLs()
-        let agentProvisioned = UserDefaults.standard.bool(forKey:"agentProvisioned")
-        if agentProvisioned {
-            self.agentProvisioned = agentProvisioned
-            let agentConfigJson = UserDefaults.standard.string(forKey:"agentConfig")!.data(using:.utf8)!
-            self.agentConfig = try! JSONDecoder().decode(AgentConfig.self,from:agentConfigJson)
-        } else {
-            self.agentConfig =  AgentConfig(
-                walletId: "AFSDefaultWallet",
-                walletKey: "",
-                genesisPath: "",
-                poolName: "AFSDefaultPool",
-                mediatorConnectionsInvite: nil,
-                mediatorPickupStrategy: .Implicit,
-                label: "SwiftFrameworkAgent",
-                autoAcceptConnections: true,
-                mediatorPollingInterval: 10,
-                mediatorEmptyReturnRetryInterval: 3,
-                connectionImageUrl: nil,
-                autoAcceptCredential: .always,
-                autoAcceptProof: .always,
-                useLedgerSerivce: true,
-                useLegacyDidSovPrefix: true,
-                publicDidSeed: nil,
-                agentEndpoints: nil)
+        os_log(.debug, log:.default, "initialize aries agent facade.")
+        let availableNetworks = AriesAgentFacade.getGenesisTxnURLs()
+        self.availableNetworks = availableNetworks
+        self.selectedNetwork = availableNetworks.first
+        let provisioned = UserDefaults.standard.value(forKey:"agentConfig") != nil
+        if provisioned {
+            self.isProvisioned = provisioned
         }
     }
     
-    static func listGenesisTxnURLs() -> [URL] {
-        print("listing genesis txn urls.")
-        let networks = Bundle.main.urls(forResourcesWithExtension: "json", subdirectory: "networks")!
-        print("networks:")
+    static func getGenesisTxnURLs() -> [URL] {
+        os_log(.debug, log:.default, "listing genesis txn urls.")
+        let networks = Bundle.main.urls(forResourcesWithExtension:"json", subdirectory:"networks")!
+        os_log(.debug, log:.default, "networks:")
         for (index, url) in networks.enumerated() {
             let networkName = url.lastPathComponent
-            print("\t* [\(index)] \(networkName)")
+            os_log(.debug, log:.default, " * [\(index)] \(networkName)")
         }
         return networks
     }
     
-    func provision() {
+    func getDefaultAgentConfig() -> AgentConfig {
+        return AgentConfig(
+            walletId: "AFSDefaultWallet",
+            walletKey: "",
+            genesisPath: "",
+            poolName: "AFSDefaultPool",
+            mediatorConnectionsInvite: nil,
+            mediatorPickupStrategy: .Implicit,
+            label: "SwiftFrameworkAgent",
+            autoAcceptConnections: true,
+            mediatorPollingInterval: 10,
+            mediatorEmptyReturnRetryInterval: 3,
+            connectionImageUrl: nil,
+            autoAcceptCredential: .always,
+            autoAcceptProof: .always,
+            useLedgerSerivce: true,
+            useLegacyDidSovPrefix: true,
+            publicDidSeed: nil,
+            agentEndpoints: nil)
+    }
+    
+    func provisionAndStart() {
         Task{
             do {
-                let seed = walletSeed.padding(toLength: 32, withPad: " ", startingAt: 0)
+                let seed = self.walletSeed.padding(toLength:32, withPad:" ", startingAt:0)
                 let key = try await IndyWallet.generateKey(forConfig:"{\"seed\":\"\(seed)\"}")!
                 let genesis = self.selectedNetwork!.absoluteURL.path
-                self.agentConfig.walletKey = key
-                self.agentConfig.genesisPath = genesis
+                var config = getDefaultAgentConfig()
+                config.walletKey = key
+                config.genesisPath = genesis
                 
-                let agentConfigJson = String(data: try JSONEncoder().encode(agentConfig), encoding: String.Encoding.utf8)
-                print("agentConfig=\(String(describing: agentConfigJson))")
+                os_log(.debug, log:.default, "agent provisioning with config=\(String(describing: config))")
                 
-                agent = Agent(agentConfig: agentConfig, agentDelegate: self)
+                agent = Agent(agentConfig:config, agentDelegate:self)
                 
                 try await agent!.initialize()
-                // TODO save AgentConfig into secure storage with geven password.
-                UserDefaults.standard.set(agentConfigJson, forKey: "agentConfig")
-                UserDefaults.standard.set(true, forKey: "agentProvisioned")
+                // TODO save AgentConfig into secure storage with ieven password.
+                UserDefaults.standard.setValue(try? PropertyListEncoder().encode(config), forKey:"agentConfig")
+                os_log(.debug, log:.default, "agent provisioned and config saved.")
             } catch {
                 if let err = error as NSError? {
                     print("open wallet failed: \(err)")
@@ -125,29 +126,32 @@ class AriesAgentFacade : ObservableObject {
             }
         }
         print("Wallet opened!")
-        self.walletOpened = true
+        self.isReady = true
     }
     
     func start() {
         Task{
             do {
-                // TODO get AgentConfig from Secure Storage with given password.
-
-                let agentConfigJson = String(data: try JSONEncoder().encode(agentConfig), encoding: String.Encoding.utf8)
-                print("agentConfig=\(String(describing: agentConfigJson))")
-                
-                agent = Agent(agentConfig: agentConfig, agentDelegate: self)
-                
-                try await agent!.initialize()
-            } catch {
+                if let data = UserDefaults.standard.value(forKey:"agentConfig") as? Data {
+                    let config = try? PropertyListDecoder().decode(AgentConfig.self, from:data)
+                    os_log(.debug, log:.default, "start agent with config=\(String(describing: config))")
+                    
+                    self.agent = Agent(agentConfig:config!, agentDelegate:self)
+                    try await agent!.initialize()
+                } else {
+                    os_log(.error, log:.default, "start agent failed because config not found.")
+                }
+            }
+            catch
+            {
                 if let err = error as NSError? {
-                    print("open wallet failed: \(err)")
+                    print("agent start failed: \(err)")
                     return
                 }
             }
         }
         print("Wallet opened!")
-        self.walletOpened = true
+        self.isReady = true
     }
     
     func oobReceiveInvitationFromUrl(_ url: String, config: ReceiveOutOfBandInvitationConfig? = nil) async throws -> (OutOfBandRecord?, ConnectionRecord?) {

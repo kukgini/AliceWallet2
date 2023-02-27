@@ -11,19 +11,19 @@ struct OpenWalletView: View {
     
     var body: some View {
         VStack {
-            if agent.walletOpened {
+            if agent.isReady {
                 WalletMainView().environmentObject(agent)
             } else {
                 NavigationStack {
                     Image(systemName:"lock")
                     TextField("Enter your PIN", text:$agent.walletSeed).padding()
                     Button(action: {
-                        if agent.agentProvisioned {
+                        if agent.isProvisioned {
                             self.agent.start()
                         } else {
-                            self.agent.provision()
+                            self.agent.provisionAndStart()
                         }}) {
-                        if agent.agentProvisioned {
+                        if agent.isProvisioned {
                             Text("Open Wallet")
                         } else {
                             Text("Create Wallet")
@@ -31,9 +31,9 @@ struct OpenWalletView: View {
                     }
                     .navigationTitle("Wallet")
                 }
-                if !agent.agentProvisioned {
+                if !agent.isProvisioned {
                     NavigationStack {
-                        List(self.agent.availableNetworls!, id: \.self, selection: $agent.selectedNetwork) { url in
+                        List(self.agent.availableNetworks!, id: \.self, selection: $agent.selectedNetwork) { url in
                             let name = url.deletingPathExtension().lastPathComponent
                             Text("\(name)")
                         }

@@ -70,12 +70,12 @@
 			children = (
 				91F3638729A86D5C00AAEE82 /* networks */,
 				912E45CF299F6B340054802D /* AriesAgentFacade.swift */,
+				91F3638F29AC979000AAEE82 /* AliceWallet2App.swift */,
 				BB5C4680270C1501008D77AE /* WalletMainView.swift */,
 				BBB509D728ED681F00A6405A /* OpenWalletView.swift */,
 				BB5C468C270C390E008D77AE /* CredentialListView.swift */,
 				BB5C468E270C4181008D77AE /* CredentialDetailView.swift */,
 				BBD7B25027181C4300C3FB6C /* QRCodeHandler.swift */,
-				91F3638F29AC979000AAEE82 /* AliceWallet2App.swift */,
 				91F3639129AC979000AAEE82 /* ContentView.swift */,
 				91F3639329AC979200AAEE82 /* Assets.xcassets */,
 				91F3639529AC979200AAEE82 /* Preview Content */,
