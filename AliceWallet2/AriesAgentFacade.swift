@@ -115,18 +115,19 @@ class AriesAgentFacade : ObservableObject {
                 agent = Agent(agentConfig:config, agentDelegate:self)
                 
                 try await agent!.initialize()
-                // TODO save AgentConfig into secure storage with ieven password.
+                
                 UserDefaults.standard.setValue(try? PropertyListEncoder().encode(config), forKey:"agentConfig")
+                
                 os_log(.debug, log:.default, "agent provisioned and config saved.")
+                
+                self.isReady = true
             } catch {
                 if let err = error as NSError? {
                     print("open wallet failed: \(err)")
-                    return
+                    throw err
                 }
             }
         }
-        print("Wallet opened!")
-        self.isReady = true
     }
     
     func start() {
