@@ -1,10 +1,3 @@
-//
-//  OnboardingView.swift
-//  AliceWallet2
-//
-//  Created by soominlee on 2023/03/02.
-//
-
 import Foundation
 import SwiftUI
 

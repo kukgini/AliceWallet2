@@ -1,8 +1,3 @@
-//
-//  WalletMainView.swift
-//  wallet-app-ios
-//
-
 import SwiftUI
 import CodeScanner
 

@@ -1,8 +1,3 @@
-//
-//  OpenWalletView.swift
-//  wallet-app-ios
-//
-
 import SwiftUI
 
 struct OpenWalletView: View {

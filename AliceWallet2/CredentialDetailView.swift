@@ -1,8 +1,3 @@
-//
-//  CredentialDetailView.swift
-//  wallet-app-ios
-//
-
 import SwiftUI
 
 struct CredentialDetailView: View {

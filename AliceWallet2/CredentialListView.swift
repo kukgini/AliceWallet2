@@ -1,8 +1,3 @@
-//
-//  CredentialListView.swift
-//  wallet-app-ios
-//
-
 import SwiftUI
 import Indy
 

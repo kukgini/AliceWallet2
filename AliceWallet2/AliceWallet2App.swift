@@ -1,10 +1,3 @@
-//
-//  AliceWallet2App.swift
-//  AliceWallet2
-//
-//  Created by soominlee on 2023/02/27.
-//
-
 import SwiftUI
 
 @main
