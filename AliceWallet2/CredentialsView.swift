@@ -1,5 +1,5 @@
 import SwiftUI
-import Indy
+import CodeScanner
 
 class CredentialList: ObservableObject {
     @Published var list: [Credential] = []
@@ -14,12 +14,14 @@ struct Credential : Codable {
     var cred_rev_id: String?
 }
 
-struct CredentialListView: View {
+struct CredentialsView: View {
     
     @EnvironmentObject var agent: AriesAgentFacade
     
+    @State var invitation: String = ""
+    
     var body: some View {
-        NavigationView {            
+        NavigationView {
             List {
 //                ForEach($agent.credentials, id: \.referent) { credential in
 //                    NavigationLink(destination: CredentialDetailView(credential: credential.wrappedValue)) {
@@ -39,8 +41,8 @@ struct CredentialListView: View {
     }
 }
 
-struct CredentialListView_Previews: PreviewProvider {
+struct CredentialsView_Previews: PreviewProvider {
     static var previews: some View {
-        CredentialListView()
+        CredentialsView()
     }
 }

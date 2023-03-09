@@ -8,17 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		56412672621A52C35ACE2FC5 /* Pods_AliceWallet2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 515F733B1D0338FC84FE8B9A /* Pods_AliceWallet2.framework */; };
+		917AF7E029BAA14B00A86EBA /* CredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917AF7DF29BAA14B00A86EBA /* CredentialsView.swift */; };
 		91EE244F29B0A6D100A2E2C6 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91EE244E29B0A6D100A2E2C6 /* OnboardingView.swift */; };
 		91F3639029AC979000AAEE82 /* AliceWallet2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F3638F29AC979000AAEE82 /* AliceWallet2App.swift */; };
 		91F3639229AC979000AAEE82 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F3639129AC979000AAEE82 /* ContentView.swift */; };
 		91F3639429AC979200AAEE82 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91F3639329AC979200AAEE82 /* Assets.xcassets */; };
 		91F3639729AC979200AAEE82 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91F3639629AC979200AAEE82 /* Preview Assets.xcassets */; };
 		91F3639B29AC97B600AAEE82 /* networks in Resources */ = {isa = PBXBuildFile; fileRef = 91F3638729A86D5C00AAEE82 /* networks */; };
-		91F3639C29AC97FE00AAEE82 /* WalletMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5C4680270C1501008D77AE /* WalletMainView.swift */; };
+		91F3639C29AC97FE00AAEE82 /* ConnectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5C4680270C1501008D77AE /* ConnectionsView.swift */; };
 		91F3639D29AC97FE00AAEE82 /* CredentialDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5C468E270C4181008D77AE /* CredentialDetailView.swift */; };
-		91F3639E29AC97FE00AAEE82 /* CredentialListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5C468C270C390E008D77AE /* CredentialListView.swift */; };
 		91F3639F29AC97FE00AAEE82 /* QRCodeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD7B25027181C4300C3FB6C /* QRCodeHandler.swift */; };
-		91F363A029AC97FE00AAEE82 /* OpenWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBB509D728ED681F00A6405A /* OpenWalletView.swift */; };
 		91F363A129AC980100AAEE82 /* AriesAgentFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912E45CF299F6B340054802D /* AriesAgentFacade.swift */; };
 		91F363A429AC9A6200AAEE82 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 91F363A329AC9A6200AAEE82 /* CodeScanner */; };
 /* End PBXBuildFile section */
@@ -28,6 +27,7 @@
 		515F733B1D0338FC84FE8B9A /* Pods_AliceWallet2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AliceWallet2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A5EE0AF8F8BDFE3A1B2B620 /* Pods-AliceWallet2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AliceWallet2.release.xcconfig"; path = "Target Support Files/Pods-AliceWallet2/Pods-AliceWallet2.release.xcconfig"; sourceTree = "<group>"; };
 		912E45CF299F6B340054802D /* AriesAgentFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AriesAgentFacade.swift; sourceTree = "<group>"; };
+		917AF7DF29BAA14B00A86EBA /* CredentialsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialsView.swift; sourceTree = "<group>"; };
 		91BB561A7A409FE55476FAB2 /* Pods-AliceWallet2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AliceWallet2.debug.xcconfig"; path = "Target Support Files/Pods-AliceWallet2/Pods-AliceWallet2.debug.xcconfig"; sourceTree = "<group>"; };
 		91EE244E29B0A6D100A2E2C6 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		91F3638729A86D5C00AAEE82 /* networks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = networks; sourceTree = "<group>"; };
@@ -38,10 +38,8 @@
 		91F3639629AC979200AAEE82 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AF8D9F8C0C6069730F060EE9 /* Pods-wallet-app-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wallet-app-ios.debug.xcconfig"; path = "Target Support Files/Pods-wallet-app-ios/Pods-wallet-app-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		BA2EED5AE7F17CC6D5EE7F1A /* Pods-wallet-app-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wallet-app-ios.release.xcconfig"; path = "Target Support Files/Pods-wallet-app-ios/Pods-wallet-app-ios.release.xcconfig"; sourceTree = "<group>"; };
-		BB5C4680270C1501008D77AE /* WalletMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletMainView.swift; sourceTree = "<group>"; };
-		BB5C468C270C390E008D77AE /* CredentialListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialListView.swift; sourceTree = "<group>"; };
+		BB5C4680270C1501008D77AE /* ConnectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionsView.swift; sourceTree = "<group>"; };
 		BB5C468E270C4181008D77AE /* CredentialDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialDetailView.swift; sourceTree = "<group>"; };
-		BBB509D728ED681F00A6405A /* OpenWalletView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenWalletView.swift; sourceTree = "<group>"; };
 		BBD7B25027181C4300C3FB6C /* QRCodeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -74,9 +72,8 @@
 				912E45CF299F6B340054802D /* AriesAgentFacade.swift */,
 				91F3638F29AC979000AAEE82 /* AliceWallet2App.swift */,
 				91EE244E29B0A6D100A2E2C6 /* OnboardingView.swift */,
-				BBB509D728ED681F00A6405A /* OpenWalletView.swift */,
-				BB5C4680270C1501008D77AE /* WalletMainView.swift */,
-				BB5C468C270C390E008D77AE /* CredentialListView.swift */,
+				BB5C4680270C1501008D77AE /* ConnectionsView.swift */,
+				917AF7DF29BAA14B00A86EBA /* CredentialsView.swift */,
 				BB5C468E270C4181008D77AE /* CredentialDetailView.swift */,
 				BBD7B25027181C4300C3FB6C /* QRCodeHandler.swift */,
 				91F3639129AC979000AAEE82 /* ContentView.swift */,
@@ -245,11 +242,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				91F363A129AC980100AAEE82 /* AriesAgentFacade.swift in Sources */,
+				917AF7E029BAA14B00A86EBA /* CredentialsView.swift in Sources */,
 				91F3639F29AC97FE00AAEE82 /* QRCodeHandler.swift in Sources */,
-				91F3639C29AC97FE00AAEE82 /* WalletMainView.swift in Sources */,
+				91F3639C29AC97FE00AAEE82 /* ConnectionsView.swift in Sources */,
 				91EE244F29B0A6D100A2E2C6 /* OnboardingView.swift in Sources */,
-				91F3639E29AC97FE00AAEE82 /* CredentialListView.swift in Sources */,
-				91F363A029AC97FE00AAEE82 /* OpenWalletView.swift in Sources */,
 				91F3639229AC979000AAEE82 /* ContentView.swift in Sources */,
 				91F3639D29AC97FE00AAEE82 /* CredentialDetailView.swift in Sources */,
 				91F3639029AC979000AAEE82 /* AliceWallet2App.swift in Sources */,

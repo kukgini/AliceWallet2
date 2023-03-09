@@ -6,9 +6,7 @@ struct AliceWallet2App: App {
     var body: some Scene {
         WindowGroup {
             if agent.isReady {
-                WalletMainView().environmentObject(agent)
-            } else if agent.isProvisioned {
-                OpenWalletView().environmentObject(agent)
+                ContentView().environmentObject(agent)
             } else {
                 OnboardingView().environmentObject(agent)
             }

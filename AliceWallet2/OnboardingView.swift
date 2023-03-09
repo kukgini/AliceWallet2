@@ -9,12 +9,14 @@ struct OnboardingView: View {
         
         VStack(alignment:.center) {
             VStack(alignment:.center) {
-                Text("Verifiable Data Registries").font(.title)
-                List (self.agent.availableNetworks!, id: \.self, selection: $agent.selectedNetwork) { url in
-                    VerifiableRegistryCell(url: url)
+            Text("Verifiable Data Registries").font(.title)
+                if agent.isProvisioned {
+                    VerifiableRegistryCell(url:agent.selectedNetwork!).background(Color.blue).frame(height:200)
+                } else {
+                    List (self.agent.availableNetworks!, id: \.self, selection: $agent.selectedNetwork) { url in
+                        VerifiableRegistryCell(url: url)
+                    }.background(Color.blue).frame(maxHeight: 200)
                 }
-                .background(Color.blue)
-                .frame(maxHeight: 200)
             }.background(Color.yellow)
             
             VStack(alignment:.center) {
@@ -23,8 +25,15 @@ struct OnboardingView: View {
                 TextField("Enter your PIN", text:$agent.walletSeed)
                     .frame(width:200)
                     .multilineTextAlignment(.center)
-                Button(action: {self.agent.provisionAndStart()}) {
-                    Text("Create Wallet")
+                if agent.isProvisioned {
+                    Button(action: {self.agent.start()}) {
+                        Text("Open Wallet")
+                    }
+
+                } else {
+                    Button(action: {self.agent.provisionAndStart()}) {
+                        Text("Create Wallet")
+                    }
                 }
             }
             .background(Color.green)

@@ -1,14 +1,7 @@
 import SwiftUI
 import CodeScanner
 
-enum MainMenu: Identifiable {
-    case qrcode, list, loading
-    var id: Int {
-        hashValue
-    }
-}
-
-struct WalletMainView: View {
+struct ConnectionsView: View {
     
     @EnvironmentObject var agent: AriesAgentFacade
     
@@ -24,14 +17,8 @@ struct WalletMainView: View {
                         }) {
                             Text("Connect")
                         }
-
-                        Button(action: {
-                            agent.menu = .list
-                        }) {
-                            Text("Credentials")
-                        }
                     }
-                    .navigationTitle("Wallet App")
+                    .navigationTitle("AliceWallet2")
                     .listStyle(.plain)
 
                     Spacer()
@@ -58,7 +45,7 @@ struct WalletMainView: View {
                     Text("Code Scan ...")
                     // CodeScannerView(codeTypes: [.qr], completion: QRCodeHandler().handleResult)
                 case .list:
-                    CredentialListView()
+                    CredentialsView()
                 case .loading:
                     Text("Processing ...")
                 }
@@ -80,8 +67,8 @@ struct WalletMainView: View {
     }
 }
 
-struct WalletMainView_Previews: PreviewProvider {
+struct ConnectionsView_Previews: PreviewProvider {
     static var previews: some View {
-        WalletMainView()
+        ConnectionsView()
     }
 }

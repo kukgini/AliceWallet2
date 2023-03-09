@@ -3,6 +3,13 @@ import Foundation
 import AriesFramework
 import Indy
 
+enum AgentMenu: Identifiable {
+    case qrcode, list, loading
+    var id: Int {
+        hashValue
+    }
+}
+
 enum ActionType: Identifiable {
     case credOffer, proofRequest
     var id: Int {
@@ -53,7 +60,7 @@ class AriesAgentFacade : ObservableObject {
     @Published var actionType: ActionType?
     @Published var alertMessage = ""
     @Published var showAlert = false
-    @Published var menu: MainMenu?
+    @Published var menu: AgentMenu?
     
     @Published var credentials: CredentialList = CredentialList()
     

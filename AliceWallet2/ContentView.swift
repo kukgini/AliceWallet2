@@ -2,11 +2,17 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        TabView {
+            ConnectionsView()
+                .tabItem {
+                    Image(systemName: "list.dash")
+                    Text("Connections")
+                }
+            CredentialsView()
+                .tabItem {
+                    Image(systemName: "list.dash")
+                    Text("Credentials")
+                }
         }
         .padding()
     }
